@@ -1,10 +1,22 @@
 package com.myreactnative;
 
+import android.os.Bundle;
+import android.util.Log;
+import androidx.annotation.Nullable;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 
 public class MainActivity extends ReactActivity {
+  public static final String TAG = "MyReactNative";
+
+  public static final String MAIN_RN_COMPONENT_NAME = "MyReactNative";
+
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    // For React Navigation, check https://reactnavigation.org/docs/6.x/getting-started
+    super.onCreate(null);
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
@@ -12,7 +24,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "MyReactNative";
+    return MAIN_RN_COMPONENT_NAME;
   }
 
   /**
@@ -22,6 +34,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
+    Log.d(TAG, "create react activity delegate");
     return new MainActivityDelegate(this, getMainComponentName());
   }
 
@@ -43,6 +56,15 @@ public class MainActivity extends ReactActivity {
       // If you opted-in for the New Architecture, we enable Concurrent Root (i.e. React 18).
       // More on this on https://reactjs.org/blog/2022/03/29/react-v18.html
       return BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
+    }
+
+    @Nullable
+    @Override
+    protected Bundle getLaunchOptions() {
+      // Send data to React Native
+      Bundle bundle = new Bundle();
+      bundle.putString("initialAppName", "Book");
+      return bundle;
     }
   }
 }
